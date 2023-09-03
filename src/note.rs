@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod unit_test;
-use crate::accidental::{Bemol, Sharp};
+use crate::accidental::{Bemol, Natural, Sharp};
 use std::fmt;
 
 impl std::ops::Add<Sharp> for Note {
@@ -43,6 +43,50 @@ impl<'a, 'b> std::ops::Add<&'a Bemol> for &'b Note {
             res_int_note = (int_note + 12 - int_acc) % 12;
         };
         Note::from_usize(res_int_note).unwrap()
+    }
+}
+impl std::ops::Add<Natural> for Note {
+    type Output = Note;
+    fn add(self, _: Natural) -> Self::Output {
+        match self {
+            Note::As => Note::A,
+            Note::Ab => Note::A,
+            Note::Bs => Note::B,
+            Note::Bb => Note::B,
+            Note::Cs => Note::C,
+            Note::Cb => Note::C,
+            Note::Ds => Note::D,
+            Note::Db => Note::D,
+            Note::Es => Note::E,
+            Note::Eb => Note::E,
+            Note::Fb => Note::F,
+            Note::Fs => Note::F,
+            Note::Gs => Note::G,
+            Note::Gb => Note::G,
+            _ => self,
+        }
+    }
+}
+impl<'a, 'b> std::ops::Add<&'a Natural> for &'b Note {
+    type Output = &'b Note;
+    fn add(self, _: &'a Natural) -> Self::Output {
+        match self {
+            Note::As => &Note::A,
+            Note::Ab => &Note::A,
+            Note::Bs => &Note::B,
+            Note::Bb => &Note::B,
+            Note::Cs => &Note::C,
+            Note::Cb => &Note::C,
+            Note::Ds => &Note::D,
+            Note::Db => &Note::D,
+            Note::Es => &Note::E,
+            Note::Eb => &Note::E,
+            Note::Fb => &Note::F,
+            Note::Fs => &Note::F,
+            Note::Gs => &Note::G,
+            Note::Gb => &Note::G,
+            _ => self,
+        }
     }
 }
 #[derive(Debug)]
