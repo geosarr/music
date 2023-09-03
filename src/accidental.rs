@@ -12,11 +12,14 @@ impl Bemol {
     pub fn number(&self) -> usize {
         self.number as usize
     }
+    pub fn to_string(&self) -> String {
+        "♭".repeat(self.number())
+    }
 }
 
 impl fmt::Display for Bemol {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let bemol = "♭".repeat(Self::number(&self));
+        let bemol = Self::to_string(&self);
         write!(f, "{bemol}")
     }
 }
@@ -32,11 +35,14 @@ impl Sharp {
     pub fn number(&self) -> usize {
         self.number as usize
     }
+    pub fn to_string(&self) -> String {
+        "#".repeat(self.number())
+    }
 }
 
 impl fmt::Display for Sharp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let sharp = "#".repeat(Self::number(&self));
+        let sharp = Self::to_string(&self);
         write!(f, "{sharp}")
     }
 }
