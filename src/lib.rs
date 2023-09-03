@@ -1,2 +1,2 @@
-mod accidental;
-mod note;
+pub mod accidental;
+pub mod note;
