@@ -6,17 +6,43 @@ use std::fmt;
 impl std::ops::Add<Sharp> for Note {
     type Output = Note;
     fn add(self, accidental: Sharp) -> Self::Output {
-        let number_half_tone = accidental.number();
-        let int_pianote = (number_half_tone + self.to_usize()) % 12;
-        Note::from_usize(int_pianote).unwrap()
+        let int_note = (accidental.number() + self.to_usize()) % 12;
+        Note::from_usize(int_note).unwrap()
     }
 }
 impl<'a, 'b> std::ops::Add<&'a Sharp> for &'b Note {
     type Output = Note;
     fn add(self, accidental: &'a Sharp) -> Self::Output {
-        let number_half_tone = accidental.number();
-        let int_pianote = (number_half_tone + self.to_usize()) % 12;
-        Note::from_usize(int_pianote).unwrap()
+        let int_note = (accidental.number() + self.to_usize()) % 12;
+        Note::from_usize(int_note).unwrap()
+    }
+}
+impl std::ops::Add<Bemol> for Note {
+    type Output = Note;
+    fn add(self, accidental: Bemol) -> Self::Output {
+        let mut res_int_note = 0;
+        let int_acc = accidental.number() % 12;
+        let int_note = self.to_usize() % 12;
+        if int_note >= int_acc {
+            res_int_note = int_note - int_acc;
+        } else {
+            res_int_note = (int_note + 12 - int_acc) % 12;
+        };
+        Note::from_usize(res_int_note).unwrap()
+    }
+}
+impl<'a, 'b> std::ops::Add<&'a Bemol> for &'b Note {
+    type Output = Note;
+    fn add(self, accidental: &'a Bemol) -> Self::Output {
+        let mut res_int_note = 0;
+        let int_acc = accidental.number() % 12;
+        let int_note = self.to_usize() % 12;
+        if int_note >= int_acc {
+            res_int_note = int_note - int_acc;
+        } else {
+            res_int_note = (int_note + 12 - int_acc) % 12;
+        };
+        Note::from_usize(res_int_note).unwrap()
     }
 }
 #[derive(Debug)]
