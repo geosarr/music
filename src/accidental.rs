@@ -2,7 +2,7 @@
 mod unit_test;
 use std::fmt;
 
-/// Implements the bemol symbol
+/// Implements the bemol symbol ('♭').
 pub struct Bemol {
     number: u8, // number of bemols to represent
 }
@@ -49,6 +49,7 @@ impl fmt::Display for Bemol {
     }
 }
 
+/// Implements the Sharp symbol ("#").
 pub struct Sharp {
     number: u8, // number of sharps to represent
 }
@@ -94,6 +95,8 @@ impl fmt::Display for Sharp {
         write!(f, "{sharp}")
     }
 }
+
+/// Implements the Sharp symbol ("♮").
 pub struct Natural {
     number: u8, // number of sharps to represent
 }

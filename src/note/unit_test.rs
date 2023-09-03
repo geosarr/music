@@ -1,9 +1,8 @@
 #[cfg(test)]
 mod tests {
+    use super::super::Note;
+    use crate::accidental::{Bemol, Natural, Sharp};
 
-    use crate::accidental::Natural;
-
-    use super::super::{Bemol, Note, Sharp};
     #[test]
     fn test_note_eq_duplicates() {
         assert_eq!(Note::As, Note::Bb);
@@ -20,13 +19,13 @@ mod tests {
     fn test_note_algebra() {
         let note = Note::E;
         let accidental = Bemol::init(1);
-        assert_eq!(&note + &accidental, Note::Eb);
+        assert_eq!(&accidental + &note, Note::Eb);
         assert_eq!(&note + &accidental, Note::Ds);
 
         let note = Note::A;
         let accidental = Sharp::init(4);
         assert_eq!(&note + &accidental, Note::Cs);
-        assert_eq!(&note + &accidental, Note::Db);
+        assert_eq!(&accidental + &note, Note::Db);
         assert_eq!(note + accidental, Note::Cs);
 
         let note = Note::C;
@@ -36,12 +35,12 @@ mod tests {
 
         let note = Note::F;
         let accidental = Natural::init(2);
-        assert_eq!(&note + &accidental, &note);
+        assert_eq!(&accidental + &note, &note);
         assert_eq!(note + accidental, Note::F);
 
         let note = Note::Es;
         let accidental = Natural::init(2);
         assert_eq!(&note + &accidental, &Note::E);
-        assert_eq!(note + accidental, Note::E);
+        assert_eq!(accidental + note, Note::E);
     }
 }
