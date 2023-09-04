@@ -75,6 +75,11 @@ impl Note {
             _ => Err(ConversionError::FromUsizeToNote),
         }
     }
+    pub fn is_in_c_major(&self) -> bool {
+        vec![0, 2, 4, 5, 7, 9, 11]
+            .iter()
+            .any(|num| num == &self.to_usize())
+    }
 }
 
 #[derive(Debug)]

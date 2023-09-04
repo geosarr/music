@@ -40,6 +40,17 @@ impl Bemol {
     pub fn to_string(&self) -> String {
         "♭".repeat(self.number())
     }
+
+    pub fn add_to_int_note(&self, num: usize) -> usize {
+        let int_acc = self.number() % 12;
+        let int_note = num % 12;
+        let res_int_note = if int_note >= int_acc {
+            int_note - int_acc
+        } else {
+            (int_note + 12 - int_acc) % 12
+        };
+        res_int_note
+    }
 }
 
 impl fmt::Display for Bemol {
@@ -86,6 +97,9 @@ impl Sharp {
     /// ```
     pub fn to_string(&self) -> String {
         "#".repeat(self.number())
+    }
+    pub fn add_to_int_note(&self, num: usize) -> usize {
+        (self.number() + num) % 12
     }
 }
 

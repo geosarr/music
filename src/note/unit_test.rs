@@ -26,11 +26,12 @@ mod tests {
         let accidental = Sharp::init(4);
         assert_eq!(&note + &accidental, Note::Cs);
         assert_eq!(&accidental + &note, Note::Db);
-        assert_eq!(note + accidental, Note::Cs);
+        assert_eq!(accidental + note, Note::Cs);
 
         let note = Note::C;
         let accidental = Bemol::init(11);
         assert_eq!(&note + &accidental, Note::Db);
+        assert_eq!(&accidental + &note, Note::Db);
         assert_eq!(note + accidental, Note::Cs);
 
         let note = Note::F;
