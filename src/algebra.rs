@@ -2,6 +2,12 @@ use crate::accidental::{Bemol, Natural, Sharp};
 use crate::note::Note;
 use crate::sound::Sound;
 
+use std::any::type_name;
+
+fn type_of<T>(_: &T) -> &'static str {
+    type_name::<T>()
+}
+
 macro_rules! operation {
     ($($Accidental:ty)*) => ($(
         impl std::ops::Add<$Accidental> for Note {
@@ -34,16 +40,25 @@ macro_rules! operation {
             type Output = Sound;
             fn add(self, accidental: $Accidental) -> Self::Output {
                 let note = self.note() + &accidental;
-                let octave = self.octave() + (accidental.number() / 12);
+                let diff = self.octave() - (accidental.number() / 12);
+                println!("{}", type_of(&accidental));
+                let octave = match type_of(&accidental) {
+                    "music::accidental::Sharp" => self.octave() + (accidental.number() / 12),
+                    "music::accidental::Bemol" => if diff > 0 {diff} else {panic!("Too many bemols (♭).")},
+                    "music::accidental::Natural" => *(self.octave()),
+                    _ => panic!("Not implemented"),
+
+                };
                 Sound::init(note, octave)
             }
         }
         impl std::ops::Add<Sound> for $Accidental {
             type Output = Sound;
-            fn add(self, sound: Sound) -> Self::Output {
-                sound + self
+            fn add(self, note: Sound) -> Self::Output {
+                note + self
             }
         }
+
 
     )*);
 }

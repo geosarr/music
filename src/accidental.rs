@@ -2,6 +2,12 @@
 mod unit_test;
 use std::fmt;
 
+// pub enum Accidental {
+//     Bemol(u8),
+//     Sharp(u8),
+//     Natural(u8),
+// }
+
 /// Implements the bemol symbol ('♭').
 pub struct Bemol {
     number: u8, // number of bemols to represent
@@ -13,7 +19,7 @@ impl Bemol {
     /// ```
     /// use music::accidental::Bemol;
     /// let bemol = Bemol::init(3);
-    /// for char in bemol.to_string().chars(){
+    /// for char in bemol.display().chars(){
     ///     assert_eq!(char, '♭');
     /// }
     /// println!("{bemol}");
@@ -35,27 +41,26 @@ impl Bemol {
     /// ```
     /// use music::accidental::Bemol;
     /// let bemol = Bemol::init(10);
-    /// assert!(!bemol.to_string().chars().any(|char| char!='♭'));
+    /// assert!(!bemol.display().chars().any(|char| char!='♭'));
     /// ```
-    pub fn to_string(&self) -> String {
+    pub fn display(&self) -> String {
         "♭".repeat(self.number())
     }
 
     pub fn add_to_int_note(&self, num: usize) -> usize {
         let int_acc = self.number() % 12;
         let int_note = num % 12;
-        let res_int_note = if int_note >= int_acc {
+        if int_note >= int_acc {
             int_note - int_acc
         } else {
             (int_note + 12 - int_acc) % 12
-        };
-        res_int_note
+        }
     }
 }
 
 impl fmt::Display for Bemol {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let bemol = Self::to_string(&self);
+        let bemol = Self::display(self);
         write!(f, "{bemol}")
     }
 }
@@ -71,7 +76,7 @@ impl Sharp {
     /// ```
     /// use music::accidental::Sharp;
     /// let sharp = Sharp::init(3);
-    /// for char in sharp.to_string().chars(){
+    /// for char in sharp.display().chars(){
     ///     assert_eq!(char, '#');
     /// }
     /// println!("{sharp}");
@@ -93,9 +98,9 @@ impl Sharp {
     /// ```
     /// use music::accidental::Sharp;
     /// let sharp = Sharp::init(10);
-    /// assert!(!sharp.to_string().chars().any(|char| char!='#'));
+    /// assert!(!sharp.display().chars().any(|char| char!='#'));
     /// ```
-    pub fn to_string(&self) -> String {
+    pub fn display(&self) -> String {
         "#".repeat(self.number())
     }
     pub fn add_to_int_note(&self, num: usize) -> usize {
@@ -105,7 +110,7 @@ impl Sharp {
 
 impl fmt::Display for Sharp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let sharp = Self::to_string(&self);
+        let sharp = Self::display(self);
         write!(f, "{sharp}")
     }
 }
@@ -121,7 +126,7 @@ impl Natural {
     /// ```
     /// use music::accidental::Natural;
     /// let natural = Natural::init(2);
-    /// for char in natural.to_string().chars(){
+    /// for char in natural.display().chars(){
     ///     assert_eq!(char, '♮');
     /// }
     /// println!("{natural}");
@@ -143,15 +148,15 @@ impl Natural {
     /// ```
     /// use music::accidental::Natural;
     /// let natural = Natural::init(10);
-    /// assert!(!natural.to_string().chars().any(|char| char!='♮'));
+    /// assert!(!natural.display().chars().any(|char| char!='♮'));
     /// ```
-    pub fn to_string(&self) -> String {
+    pub fn display(&self) -> String {
         "♮".repeat(self.number())
     }
 }
 impl fmt::Display for Natural {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let sharp = Self::to_string(&self);
+        let sharp = Self::display(self);
         write!(f, "{sharp}")
     }
 }
