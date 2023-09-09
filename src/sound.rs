@@ -64,3 +64,8 @@ impl PartialEq for Sound {
         (self.note == other.note) & (self.octave == other.octave)
     }
 }
+impl PartialOrd for Sound {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        self.range().partial_cmp(&other.range())
+    }
+}
