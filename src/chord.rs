@@ -23,4 +23,13 @@ impl Chord {
     pub fn add_sound(&mut self, sound: Sound) {
         self.sounds.push(sound);
     }
+    pub fn range(&self) -> usize {
+        if !self.sounds.is_empty() {
+            let mut sounds = self.sounds.clone();
+            sounds.sort();
+            sounds[sounds.len() - 1].range() - sounds[0].range()
+        } else {
+            panic!("Not enough sounds.");
+        }
+    }
 }
