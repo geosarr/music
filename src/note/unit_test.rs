@@ -36,12 +36,12 @@ mod tests {
 
         let note = Note::F;
         let accidental = Natural::init(2);
-        assert_eq!(&accidental + &note, &note);
+        assert_eq!(&accidental + &note, note);
         assert_eq!(note + accidental, Note::F);
 
         let note = Note::Es;
         let accidental = Natural::init(2);
-        assert_eq!(&note + &accidental, &Note::E);
+        assert_eq!(&note + &accidental, Note::E);
         assert_eq!(accidental + note, Note::E);
     }
 }

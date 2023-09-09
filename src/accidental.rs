@@ -2,6 +2,8 @@
 mod unit_test;
 use std::fmt;
 
+use crate::note::Note;
+
 // pub enum Accidental {
 //     Bemol(u8),
 //     Sharp(u8),
@@ -47,14 +49,15 @@ impl Bemol {
         "♭".repeat(self.number())
     }
 
-    pub fn add_to_int_note(&self, num: usize) -> usize {
+    pub fn add_note(&self, note: &Note) -> Note {
         let int_acc = self.number() % 12;
-        let int_note = num % 12;
-        if int_note >= int_acc {
+        let int_note = note.to_usize() % 12;
+        let res_int_note = if int_note >= int_acc {
             int_note - int_acc
         } else {
             (int_note + 12 - int_acc) % 12
-        }
+        };
+        Note::from_usize(res_int_note).unwrap()
     }
 }
 
@@ -103,8 +106,9 @@ impl Sharp {
     pub fn display(&self) -> String {
         "#".repeat(self.number())
     }
-    pub fn add_to_int_note(&self, num: usize) -> usize {
-        (self.number() + num) % 12
+    pub fn add_note(&self, note: &Note) -> Note {
+        let int_note = (self.number() + note.to_usize()) % 12;
+        Note::from_usize(int_note).unwrap()
     }
 }
 
@@ -152,6 +156,25 @@ impl Natural {
     /// ```
     pub fn display(&self) -> String {
         "♮".repeat(self.number())
+    }
+    pub fn add_note(&self, note: &Note) -> Note {
+        match *note {
+            Note::As => Note::A,
+            Note::Ab => Note::A,
+            Note::Bs => Note::B,
+            Note::Bb => Note::B,
+            Note::Cs => Note::C,
+            Note::Cb => Note::C,
+            Note::Ds => Note::D,
+            Note::Db => Note::D,
+            Note::Es => Note::E,
+            Note::Eb => Note::E,
+            Note::Fb => Note::F,
+            Note::Fs => Note::F,
+            Note::Gs => Note::G,
+            Note::Gb => Note::G,
+            _ => *note,
+        }
     }
 }
 impl fmt::Display for Natural {
