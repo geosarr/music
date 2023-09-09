@@ -10,16 +10,51 @@ pub struct Sound {
     octave: usize,
 }
 impl Sound {
+    /// Creates representation of a piano key/sound.
+    /// # Panics
+    /// It panics when the octave is set to 0.
+    /// ```
+    /// use music::sound::Sound;
+    /// use music::note::Note;
+    /// let note = Note::C;
+    /// let sound = Sound::init(note, 2);
+    /// assert_eq!(sound.note(), note);
+    /// assert_eq!(sound.octave(), 2);
+    /// ```
     pub fn init(note: Note, octave: usize) -> Self {
         assert!(octave > 0);
         Self { note, octave }
     }
+    /// Gives the note of the sound.
+    /// ```
+    /// use music::sound::Sound;
+    /// use music::note::Note;
+    /// let sound = Sound::init(Note::C, 1);
+    /// assert_eq!(sound.note(), Note::C);
+    /// ```
     pub fn note(&self) -> Note {
         self.note
     }
+    /// Gives the octave of the sound.
+    /// ```
+    /// use music::sound::Sound;
+    /// use music::note::Note;
+    /// let sound = Sound::init(Note::G, 3);
+    /// assert_eq!(sound.octave(), 3);
+    /// ```
     pub fn octave(&self) -> usize {
         self.octave
     }
+    /// Gives the range of the key/sound, from 0 to +∞,
+    /// 0 representing the lowest C note.
+    /// ```
+    /// use music::sound::Sound;
+    /// use music::note::Note;
+    /// let sound = Sound::init(Note::Gb, 2);
+    /// assert_eq!(sound.range(), 18);
+    /// let sound = Sound::init(Note::C, 2);
+    /// assert_eq!(sound.range(), 12);
+    /// ```
     pub fn range(&self) -> usize {
         (self.octave - 1) * 12 + self.note.to_usize()
     }

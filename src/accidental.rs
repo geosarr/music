@@ -4,12 +4,6 @@ use std::fmt;
 
 use crate::note::Note;
 
-// pub enum Accidental {
-//     Bemol(u8),
-//     Sharp(u8),
-//     Natural(u8),
-// }
-
 /// Implements the bemol symbol ('♭').
 pub struct Bemol {
     number: u8, // number of bemols to represent
@@ -48,7 +42,13 @@ impl Bemol {
     pub fn display(&self) -> String {
         "♭".repeat(self.number())
     }
-
+    /// Adds a Note to the accidental.
+    /// ```
+    /// use music::accidental::Bemol;
+    /// use music::note::Note;
+    /// let bemol = Bemol::init(3);
+    /// assert_eq!(Note::Eb + bemol, Note::C);
+    /// ```
     pub fn add_note(&self, note: &Note) -> Note {
         let int_acc = self.number() % 12;
         let int_note = note.to_usize() % 12;
@@ -58,13 +58,6 @@ impl Bemol {
             (int_note + 12 - int_acc) % 12
         };
         Note::from_usize(res_int_note).unwrap()
-    }
-}
-
-impl fmt::Display for Bemol {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let bemol = Self::display(self);
-        write!(f, "{bemol}")
     }
 }
 
@@ -106,16 +99,16 @@ impl Sharp {
     pub fn display(&self) -> String {
         "#".repeat(self.number())
     }
+    /// Adds a Note to the accidental.
+    /// ```
+    /// use music::accidental::Sharp;
+    /// use music::note::Note;
+    /// let sharp = Sharp::init(2);
+    /// assert_eq!(Note::Ds + sharp, Note::F);
+    /// ```
     pub fn add_note(&self, note: &Note) -> Note {
         let int_note = (self.number() + note.to_usize()) % 12;
         Note::from_usize(int_note).unwrap()
-    }
-}
-
-impl fmt::Display for Sharp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let sharp = Self::display(self);
-        write!(f, "{sharp}")
     }
 }
 
@@ -157,6 +150,13 @@ impl Natural {
     pub fn display(&self) -> String {
         "♮".repeat(self.number())
     }
+    /// Adds a Note to the accidental.
+    /// ```
+    /// use music::accidental::Natural;
+    /// use music::note::Note;
+    /// let natural = Natural::init(2);
+    /// assert_eq!(Note::Ds + natural, Note::D);
+    /// ```
     pub fn add_note(&self, note: &Note) -> Note {
         match *note {
             Note::As => Note::A,
@@ -177,9 +177,14 @@ impl Natural {
         }
     }
 }
-impl fmt::Display for Natural {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let sharp = Self::display(self);
-        write!(f, "{sharp}")
-    }
+macro_rules! display_acc {
+    ($($Accidental:ty)*) => ($(
+        impl fmt::Display for $Accidental {
+            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                let accidental = Self::display(self);
+                write!(f, "{accidental}")
+            }
+        }
+    )*);
 }
+display_acc! {Sharp Bemol Natural}
