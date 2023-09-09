@@ -19,11 +19,14 @@ mod tests {
     fn test_note_algebra() {
         let note = Note::E;
         let accidental = Bemol::init(1);
+        assert_eq!(accidental + note, Note::Eb);
+        assert_eq!(note + accidental, Note::Ds);
         assert_eq!(&accidental + &note, Note::Eb);
         assert_eq!(&note + &accidental, Note::Ds);
 
         let note = Note::A;
         let accidental = Sharp::init(4);
+        assert_eq!(note + accidental, Note::Cs);
         assert_eq!(&note + &accidental, Note::Cs);
         assert_eq!(&accidental + &note, Note::Db);
         assert_eq!(accidental + note, Note::Cs);
@@ -33,15 +36,20 @@ mod tests {
         assert_eq!(&note + &accidental, Note::Db);
         assert_eq!(&accidental + &note, Note::Db);
         assert_eq!(note + accidental, Note::Cs);
+        assert_eq!(accidental + note, Note::Cs);
 
         let note = Note::F;
         let accidental = Natural::init(2);
         assert_eq!(&accidental + &note, note);
         assert_eq!(note + accidental, Note::F);
+        assert_eq!(accidental + note, note);
+        assert_eq!(&note + &accidental, Note::F);
 
         let note = Note::Es;
         let accidental = Natural::init(2);
         assert_eq!(&note + &accidental, Note::E);
         assert_eq!(accidental + note, Note::E);
+        assert_eq!(note + accidental, Note::E);
+        assert_eq!(&accidental + &note, Note::E);
     }
 }
