@@ -10,6 +10,10 @@ mod tests {
         let expected_sound = Sound::init(Note::D, 3);
         assert_eq!(sound + Sharp::init(12), expected_sound);
 
+        let sound = Sound::init(Note::Gs, 5);
+        let expected_sound = Sound::init(Note::C, 6);
+        assert_eq!(sound + Sharp::init(4), expected_sound);
+
         let sound = Sound::init(Note::Cs, 1);
         let expected_sound = Sound::init(Note::Gb, 1);
         assert_eq!(sound + Sharp::init(5), expected_sound);
@@ -17,5 +21,9 @@ mod tests {
         let sound = Sound::init(Note::Cs, 2);
         let expected_sound = Sound::init(Note::G, 1);
         assert_eq!(sound + Bemol::init(6), expected_sound);
+
+        // let sound = Sound::init(Note::Ab, 2);
+        // let expected_sound = sound;
+        // assert_eq!(sound + Natural::init(2), expected_sound);
     }
 }

@@ -2,7 +2,7 @@
 mod unit_test;
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum Note {
     A,
     As, // A#
@@ -79,6 +79,12 @@ impl Note {
         vec![0, 2, 4, 5, 7, 9, 11]
             .iter()
             .any(|num| num == &self.to_usize())
+    }
+    pub fn dist_to_upper_c(&self) -> usize {
+        12 - self.to_usize()
+    }
+    pub fn dist_to_lower_c(&self) -> usize {
+        self.to_usize()
     }
 }
 

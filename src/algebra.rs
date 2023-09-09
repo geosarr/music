@@ -39,16 +39,23 @@ macro_rules! operation {
         impl std::ops::Add<$Accidental> for Sound {
             type Output = Sound;
             fn add(self, accidental: $Accidental) -> Self::Output {
-                let note = self.note() + &accidental;
-                let diff = self.octave() - (accidental.number() / 12);
-                println!("{}", type_of(&accidental));
-                let octave = match type_of(&accidental) {
-                    "music::accidental::Sharp" => self.octave() + (accidental.number() / 12),
-                    "music::accidental::Bemol" => if diff > 0 {diff} else {panic!("Too many bemols (♭).")},
-                    "music::accidental::Natural" => *(self.octave()),
+                let expected_range = match type_of(&accidental) {
+                    "music::accidental::Sharp" => {
+                        self.range() + accidental.number()
+                    },
+                    "music::accidental::Bemol" => {
+                        if self.range() < accidental.number() {
+                            panic!("Too much bemol to add.")
+                        } else {
+                            self.range() - accidental.number()
+                        }
+                    }
+                    "music::accidental::Natural" => self.range(),
                     _ => panic!("Not implemented"),
 
                 };
+                let note = Note::from_usize(expected_range % 12).unwrap();
+                let octave = 1 + (expected_range / 12);
                 Sound::init(note, octave)
             }
         }
