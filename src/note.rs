@@ -33,6 +33,18 @@ impl PartialEq for Note {
     }
 }
 
+impl PartialOrd for Note {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        self.to_usize().partial_cmp(&other.to_usize())
+    }
+}
+
+impl Ord for Note {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        self.to_usize().cmp(&other.to_usize())
+    }
+}
+
 impl Note {
     /// Converts the note to its integer representative
     /// that is beetween 0 and 11.

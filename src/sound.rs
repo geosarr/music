@@ -69,3 +69,8 @@ impl PartialOrd for Sound {
         self.range().partial_cmp(&other.range())
     }
 }
+impl Ord for Sound {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        self.range().cmp(&other.range())
+    }
+}
