@@ -49,7 +49,7 @@ impl Note {
     /// Converts the note to its integer representative
     /// that is beetween 0 and 11.
     /// ```
-    /// use music::note::Note;
+    /// use music::Note;
     /// assert_eq!(Note::Bb.to_usize(), 10);
     /// assert_eq!(Note::Ab.to_usize(), Note::Gs.to_usize());
     /// ```
@@ -81,7 +81,7 @@ impl Note {
     /// Converts an integer to a note.
     /// It computes the remainder of `num` in the euclidean division by 12 and maps it to a note.
     /// ```
-    /// use music::note::Note;
+    /// use music::Note;
     /// assert_eq!(Note::from_usize(13), Note::from_usize(1));
     /// ```
     pub fn from_usize(num: usize) -> Self {
@@ -104,7 +104,7 @@ impl Note {
     }
     /// Tests whether or not the note is in C major.
     /// ```
-    /// use music::note::Note;
+    /// use music::Note;
     /// assert!(Note::C.is_in_c_major());
     /// assert!(!Note::Ds.is_in_c_major());
     /// assert!(Note::Fb.is_in_c_major());
@@ -116,7 +116,7 @@ impl Note {
     }
     /// Computes the distance (in half tone) to upper C note.
     /// ```
-    /// use music::note::Note;
+    /// use music::Note;
     /// assert_eq!(Note::D.dist_to_upper_c(), 10);
     /// assert_eq!(Note::Fs.dist_to_upper_c(), 6);
     /// ```
@@ -125,7 +125,7 @@ impl Note {
     }
     /// Computes the distance  (in half tone) to lower C note.
     /// ```
-    /// use music::note::Note;
+    /// use music::Note;
     /// assert_eq!(Note::D.dist_to_lower_c(), 2);
     /// assert_eq!(Note::Fs.dist_to_lower_c(), 6);
     /// ```

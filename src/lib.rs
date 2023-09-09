@@ -1,6 +1,12 @@
-pub mod accidental;
+mod accidental;
 mod algebra;
-pub mod chord;
-pub mod interval;
-pub mod note;
-pub mod sound;
+mod chord;
+mod interval;
+mod note;
+mod sound;
+
+pub use accidental::{Bemol, Natural, Sharp};
+pub use chord::Chord;
+pub use interval::Interval;
+pub use note::Note;
+pub use sound::Sound;

@@ -1,7 +1,7 @@
-use crate::accidental::{Bemol, Natural, Sharp};
 use crate::interval::Interval;
 use crate::note::Note;
 use crate::sound::Sound;
+use crate::{Bemol, Natural, Sharp};
 
 use std::any::type_name;
 

@@ -1,4 +1,4 @@
-use crate::sound::Sound;
+use crate::Sound;
 
 pub struct Chord {
     sounds: Vec<Sound>,

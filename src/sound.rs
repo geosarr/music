@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod unit_test;
 
-use crate::note::Note;
+use crate::Note;
 
 /// Representation of a piano key sound.
 #[derive(Debug, Clone, Copy, Eq)]
@@ -14,8 +14,8 @@ impl Sound {
     /// # Panics
     /// It panics when the octave is set to 0.
     /// ```
-    /// use music::sound::Sound;
-    /// use music::note::Note;
+    /// use music::Sound;
+    /// use music::Note;
     /// let note = Note::C;
     /// let sound = Sound::init(note, 2);
     /// assert_eq!(sound.note(), note);
@@ -27,8 +27,8 @@ impl Sound {
     }
     /// Gives the note of the sound.
     /// ```
-    /// use music::sound::Sound;
-    /// use music::note::Note;
+    /// use music::Sound;
+    /// use music::Note;
     /// let sound = Sound::init(Note::C, 1);
     /// assert_eq!(sound.note(), Note::C);
     /// ```
@@ -37,8 +37,8 @@ impl Sound {
     }
     /// Gives the octave of the sound.
     /// ```
-    /// use music::sound::Sound;
-    /// use music::note::Note;
+    /// use music::Sound;
+    /// use music::Note;
     /// let sound = Sound::init(Note::G, 3);
     /// assert_eq!(sound.octave(), 3);
     /// ```
@@ -48,8 +48,8 @@ impl Sound {
     /// Gives the range of the key/sound, from 0 to +∞,
     /// 0 representing the lowest C note.
     /// ```
-    /// use music::sound::Sound;
-    /// use music::note::Note;
+    /// use music::Sound;
+    /// use music::Note;
     /// let sound = Sound::init(Note::Gb, 2);
     /// assert_eq!(sound.range(), 18);
     /// let sound = Sound::init(Note::C, 2);

@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod unit_test;
 
-use crate::sound::Sound;
+use crate::Sound;
 
 /// Implements an interval between two sounds.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -13,9 +13,9 @@ pub struct Interval {
 impl Interval {
     /// Creates representation of an interval of two sounds.
     /// ```
-    /// use music::interval::Interval;
-    /// use music::sound::Sound;
-    /// use music::note::Note;
+    /// use music::Interval;
+    /// use music::Sound;
+    /// use music::Note;
     /// let sound_one = Sound::init(Note::C, 2);
     /// let sound_two = Sound::init(Note::F, 3);
     /// let interval = Interval::init(sound_one, sound_two);
@@ -30,9 +30,9 @@ impl Interval {
     }
     /// Gives the first sound of the interval.
     /// ```
-    /// use music::interval::Interval;
-    /// use music::sound::Sound;
-    /// use music::note::Note;
+    /// use music::Interval;
+    /// use music::Sound;
+    /// use music::Note;
     /// let sound_one = Sound::init(Note::Cs, 2);
     /// let sound_two = Sound::init(Note::Bb, 3);
     /// let interval = Interval::init(sound_one, sound_two);
@@ -43,9 +43,9 @@ impl Interval {
     }
     /// Gives the second sound of the interval.
     /// ```
-    /// use music::interval::Interval;
-    /// use music::sound::Sound;
-    /// use music::note::Note;
+    /// use music::Interval;
+    /// use music::Sound;
+    /// use music::Note;
     /// let sound_one = Sound::init(Note::Cs, 2);
     /// let sound_two = Sound::init(Note::Bb, 3);
     /// let interval = Interval::init(sound_one, sound_two);
@@ -55,10 +55,10 @@ impl Interval {
         self.sound_two
     }
     /// Test whether or not the interval is strictly ascending (not unison).
-    /// /// ```
-    /// use music::interval::Interval;
-    /// use music::sound::Sound;
-    /// use music::note::Note;
+    /// ```
+    /// use music::Interval;
+    /// use music::Sound;
+    /// use music::Note;
     /// let sound_one = Sound::init(Note::As, 3);
     /// let sound_two = Sound::init(Note::As, 5);
     /// let interval = Interval::init(sound_one, sound_two);
@@ -74,9 +74,9 @@ impl Interval {
     /// Test whether or not the interval is in unison:
     /// that is when the two sounds making up the interval are equal.
     /// ```
-    /// use music::interval::Interval;
-    /// use music::sound::Sound;
-    /// use music::note::Note;
+    /// use music::Interval;
+    /// use music::Sound;
+    /// use music::Note;
     /// let sound_one = Sound::init(Note::Bb, 4);
     /// let sound_two = Sound::init(Note::Bb, 4);
     /// let interval = Interval::init(sound_one, sound_two);

@@ -14,7 +14,7 @@ impl Bemol {
     /// # Panics
     /// It panics when the number of symbols is set to 0.
     /// ```
-    /// use music::accidental::Bemol;
+    /// use music::Bemol;
     /// let bemol = Bemol::init(3);
     /// for char in bemol.display().chars(){
     ///     assert_eq!(char, '♭');
@@ -27,7 +27,7 @@ impl Bemol {
     }
     /// Gives the number of bemols.
     /// ```
-    /// use music::accidental::Bemol;
+    /// use music::Bemol;
     /// let bemol = Bemol::init(3);
     /// assert_eq!(bemol.number(), 3);
     /// ```
@@ -36,7 +36,7 @@ impl Bemol {
     }
     /// Converts bemols to string.
     /// ```
-    /// use music::accidental::Bemol;
+    /// use music::Bemol;
     /// let bemol = Bemol::init(10);
     /// assert!(!bemol.display().chars().any(|char| char!='♭'));
     /// ```
@@ -45,8 +45,8 @@ impl Bemol {
     }
     /// Adds a Note to the accidental.
     /// ```
-    /// use music::accidental::Bemol;
-    /// use music::note::Note;
+    /// use music::Bemol;
+    /// use music::Note;
     /// let bemol = Bemol::init(3);
     /// assert_eq!(Note::Eb + bemol, Note::C);
     /// ```
@@ -72,7 +72,7 @@ impl Sharp {
     /// # Panics
     /// It panics when the number of symbols is set to 0.
     /// ```
-    /// use music::accidental::Sharp;
+    /// use music::Sharp;
     /// let sharp = Sharp::init(3);
     /// for char in sharp.display().chars(){
     ///     assert_eq!(char, '#');
@@ -85,7 +85,7 @@ impl Sharp {
     }
     /// Gives the number of sharps.
     /// ```
-    /// use music::accidental::Sharp;
+    /// use music::Sharp;
     /// let sharp = Sharp::init(5);
     /// assert_eq!(sharp.number(), 5);
     /// ```
@@ -94,7 +94,7 @@ impl Sharp {
     }
     /// Converts sharps to string.
     /// ```
-    /// use music::accidental::Sharp;
+    /// use music::Sharp;
     /// let sharp = Sharp::init(10);
     /// assert!(!sharp.display().chars().any(|char| char!='#'));
     /// ```
@@ -103,8 +103,8 @@ impl Sharp {
     }
     /// Adds a Note to the accidental.
     /// ```
-    /// use music::accidental::Sharp;
-    /// use music::note::Note;
+    /// use music::Sharp;
+    /// use music::Note;
     /// let sharp = Sharp::init(2);
     /// assert_eq!(Note::Ds + sharp, Note::F);
     /// ```
@@ -124,7 +124,7 @@ impl Natural {
     /// # Panics
     /// It panics when the number of symbols is set to 0.
     /// ```
-    /// use music::accidental::Natural;
+    /// use music::Natural;
     /// let natural = Natural::init(2);
     /// for char in natural.display().chars(){
     ///     assert_eq!(char, '♮');
@@ -137,7 +137,7 @@ impl Natural {
     }
     /// Gives the number of naturals.
     /// ```
-    /// use music::accidental::Natural;
+    /// use music::Natural;
     /// let natural = Natural::init(6);
     /// assert_eq!(natural.number(), 6);
     /// ```
@@ -146,7 +146,7 @@ impl Natural {
     }
     /// Converts naturals to string.
     /// ```
-    /// use music::accidental::Natural;
+    /// use music::Natural;
     /// let natural = Natural::init(10);
     /// assert!(!natural.display().chars().any(|char| char!='♮'));
     /// ```
@@ -155,8 +155,8 @@ impl Natural {
     }
     /// Adds a Note to the accidental.
     /// ```
-    /// use music::accidental::Natural;
-    /// use music::note::Note;
+    /// use music::Natural;
+    /// use music::Note;
     /// let natural = Natural::init(2);
     /// assert_eq!(Note::Ds + natural, Note::D);
     /// ```
