@@ -3,7 +3,7 @@ mod unit_test;
 use std::fmt;
 
 /// Implementation of a note
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Eq)]
 pub enum Note {
     A,
     As, // A#

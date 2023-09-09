@@ -5,6 +5,7 @@ use std::fmt;
 use crate::note::Note;
 
 /// Implements the bemol symbol ('♭').
+#[derive(Debug, Clone, Copy)]
 pub struct Bemol {
     number: u8, // number of bemols to represent
 }
@@ -62,6 +63,7 @@ impl Bemol {
 }
 
 /// Implements the Sharp symbol ("#").
+#[derive(Debug, Clone, Copy)]
 pub struct Sharp {
     number: u8, // number of sharps to represent
 }
@@ -113,6 +115,7 @@ impl Sharp {
 }
 
 /// Implements the Sharp symbol ("♮").
+#[derive(Debug, Clone, Copy)]
 pub struct Natural {
     number: u8, // number of sharps to represent
 }

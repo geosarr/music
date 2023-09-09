@@ -4,7 +4,7 @@ mod unit_test;
 use crate::note::Note;
 
 /// Representation of a piano key sound.
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Eq)]
 pub struct Sound {
     note: Note,
     octave: usize,

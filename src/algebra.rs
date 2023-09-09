@@ -1,4 +1,5 @@
 use crate::accidental::{Bemol, Natural, Sharp};
+use crate::interval::Interval;
 use crate::note::Note;
 use crate::sound::Sound;
 
@@ -61,6 +62,46 @@ macro_rules! operation {
             type Output = Sound;
             fn add(self, note: Sound) -> Self::Output {
                 note + self // commutative operation
+            }
+        }
+        impl std::ops::Add<&$Accidental> for &Sound {
+            type Output = Sound;
+            fn add(self, accidental: &$Accidental) -> Self::Output {
+                *self + *accidental
+            }
+        }
+        impl std::ops::Add<&Sound> for &$Accidental {
+            type Output = Sound;
+            fn add(self, sound: &Sound) -> Self::Output {
+                *self + *sound
+            }
+        }
+        impl std::ops::Add<$Accidental> for Interval {
+            type Output = Interval;
+            fn add(self, accidental: $Accidental) -> Self::Output {
+                // Translating accidents to the sounds of the interval.
+                let expected_sound_one = self.first_sound() + accidental;
+                let expected_sound_two = self.second_sound() + accidental;
+                Interval::init(expected_sound_one, expected_sound_two)
+            }
+        }
+        impl std::ops::Add<Interval> for $Accidental {
+            type Output = Interval;
+            fn add(self, interval: Interval) -> Self::Output {
+                interval + self
+            }
+        }
+        impl std::ops::Add<&$Accidental> for &Interval {
+            type Output = Interval;
+            fn add(self, accidental: &$Accidental) -> Self::Output {
+                // Translating accidents to the sounds of the interval.
+                *self + *accidental
+            }
+        }
+        impl std::ops::Add<&Interval> for &$Accidental {
+            type Output = Interval;
+            fn add(self, interval: &Interval) -> Self::Output {
+                interval + self
             }
         }
     )*);

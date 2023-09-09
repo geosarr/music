@@ -1,7 +1,10 @@
+#[cfg(test)]
+mod unit_test;
+
 use crate::sound::Sound;
 
 /// Implements an interval between two sounds.
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Interval {
     sound_one: Sound,
     sound_two: Sound,
