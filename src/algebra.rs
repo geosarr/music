@@ -52,7 +52,7 @@ macro_rules! operation {
                     _ => panic!("Not implemented"),
 
                 };
-                let note = Note::from_usize(expected_range % 12).unwrap();
+                let note = Note::from_usize(expected_range % 12);
                 let octave = 1 + (expected_range / 12);
                 Sound::init(note, octave)
             }
@@ -63,8 +63,6 @@ macro_rules! operation {
                 note + self // commutative operation
             }
         }
-
-
     )*);
 }
 operation! {Sharp Bemol Natural}

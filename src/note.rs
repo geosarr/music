@@ -2,6 +2,7 @@
 mod unit_test;
 use std::fmt;
 
+/// Implementation of a note
 #[derive(Debug, Clone, Copy)]
 pub enum Note {
     A,
@@ -33,6 +34,13 @@ impl PartialEq for Note {
 }
 
 impl Note {
+    /// Converts the note to its integer representative
+    /// that is beetween 0 and 11.
+    /// ```
+    /// use music::note::Note;
+    /// assert_eq!(Note::Bb.to_usize(), 10);
+    /// assert_eq!(Note::Ab.to_usize(), Note::Gs.to_usize());
+    /// ```
     pub fn to_usize(&self) -> usize {
         match self {
             Note::C => 0,
@@ -58,40 +66,62 @@ impl Note {
             Note::Bs => 0,
         }
     }
-    pub fn from_usize(num: usize) -> Result<Self, ConversionError> {
-        match num {
-            0 => Ok(Note::C),
-            1 => Ok(Note::Cs),
-            2 => Ok(Note::D),
-            3 => Ok(Note::Eb),
-            4 => Ok(Note::E),
-            5 => Ok(Note::F),
-            6 => Ok(Note::Fs),
-            7 => Ok(Note::G),
-            8 => Ok(Note::Ab),
-            9 => Ok(Note::A),
-            10 => Ok(Note::Bb),
-            11 => Ok(Note::B),
-            _ => Err(ConversionError::FromUsizeToNote),
+    /// Converts an integer to a note.
+    /// It computes the remainder of `num` in the euclidean division by 12 and maps it to a note.
+    /// ```
+    /// use music::note::Note;
+    /// assert_eq!(Note::from_usize(13), Note::from_usize(1));
+    /// ```
+    pub fn from_usize(num: usize) -> Self {
+        let num_remainder = num % 12;
+        match num_remainder {
+            0 => Note::C,
+            1 => Note::Cs,
+            2 => Note::D,
+            3 => Note::Eb,
+            4 => Note::E,
+            5 => Note::F,
+            6 => Note::Fs,
+            7 => Note::G,
+            8 => Note::Ab,
+            9 => Note::A,
+            10 => Note::Bb,
+            11 => Note::B,
+            _ => panic!("Not implemented."),
         }
     }
+    /// Tests whether or not the note is in C major.
+    /// ```
+    /// use music::note::Note;
+    /// assert!(Note::C.is_in_c_major());
+    /// assert!(!Note::Ds.is_in_c_major());
+    /// assert!(Note::Fb.is_in_c_major());
+    /// ```
     pub fn is_in_c_major(&self) -> bool {
         vec![0, 2, 4, 5, 7, 9, 11]
             .iter()
             .any(|num| num == &self.to_usize())
     }
+    /// Computes the distance (in half tone) to upper C note.
+    /// ```
+    /// use music::note::Note;
+    /// assert_eq!(Note::D.dist_to_upper_c(), 10);
+    /// assert_eq!(Note::Fs.dist_to_upper_c(), 6);
+    /// ```
     pub fn dist_to_upper_c(&self) -> usize {
         12 - self.to_usize()
     }
+    /// Computes the distance  (in half tone) to lower C note.
+    /// ```
+    /// use music::note::Note;
+    /// assert_eq!(Note::D.dist_to_lower_c(), 2);
+    /// assert_eq!(Note::Fs.dist_to_lower_c(), 6);
+    /// ```
     pub fn dist_to_lower_c(&self) -> usize {
         self.to_usize()
     }
 }
 
-#[derive(Debug)]
-pub enum ConversionError {
-    FromUsizeToNote,
-}
 impl fmt::Display for Note {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {

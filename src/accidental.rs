@@ -57,7 +57,7 @@ impl Bemol {
         } else {
             (int_note + 12 - int_acc) % 12
         };
-        Note::from_usize(res_int_note).unwrap()
+        Note::from_usize(res_int_note)
     }
 }
 
@@ -108,7 +108,7 @@ impl Sharp {
     /// ```
     pub fn add_note(&self, note: &Note) -> Note {
         let int_note = (self.number() + note.to_usize()) % 12;
-        Note::from_usize(int_note).unwrap()
+        Note::from_usize(int_note)
     }
 }
 
