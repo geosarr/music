@@ -1,7 +1,4 @@
-use crate::interval::Interval;
-use crate::note::Note;
-use crate::sound::Sound;
-use crate::{Bemol, Natural, Sharp};
+use crate::{Bemol, Chord, Interval, Natural, Note, Sharp, Sound};
 
 use std::any::type_name;
 
@@ -104,6 +101,41 @@ macro_rules! operation {
                 interval + self
             }
         }
+        impl std::ops::Add<$Accidental> for Chord {
+            type Output = Chord;
+            fn add(self, accidental: $Accidental) -> Self::Output {
+                // Translating accidents to the sounds of the Chord.
+                let expected_sounds = self.sounds()
+                                        .iter()
+                                        .map(|sound| sound + &accidental)
+                                        .collect::<Vec<Sound>>();
+                Chord::from_vec(expected_sounds)
+            }
+        }
+        impl std::ops::Add<Chord> for $Accidental {
+            type Output = Chord;
+            fn add(self, chord: Chord) -> Self::Output {
+                chord + self
+            }
+        }
+        impl std::ops::Add<&$Accidental> for &Chord {
+            type Output = Chord;
+            fn add(self, accidental: &$Accidental) -> Self::Output {
+                // Translating accidents to the sounds of the interval.
+                let expected_sounds = self.sounds()
+                                        .iter()
+                                        .map(|sound| sound + accidental)
+                                        .collect::<Vec<Sound>>();
+                Chord::from_vec(expected_sounds)
+            }
+        }
+        impl std::ops::Add<&Chord> for &$Accidental {
+            type Output = Chord;
+            fn add(self, chord: &Chord) -> Self::Output {
+                chord + self
+            }
+        }
+
     )*);
 }
 operation! {Sharp Bemol Natural}
