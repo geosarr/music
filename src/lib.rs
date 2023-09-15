@@ -5,7 +5,7 @@ mod interval;
 mod note;
 mod sound;
 
-pub use accidental::{Bemol, Natural, Sharp};
+pub use accidental::{Flat, Natural, Sharp};
 pub use chord::Chord;
 pub use interval::Interval;
 pub use note::Note;

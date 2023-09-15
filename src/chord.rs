@@ -22,9 +22,9 @@ impl Chord {
     /// Gives the number of sounds in the chord.
     /// ```
     /// use music::{Chord, Sound, Note};
-    /// let b_bemol_2 = Sound::init(Note::Bb, 2);
+    /// let b_flat_2 = Sound::init(Note::Bb, 2);
     /// let c_sharp_4 = Sound::init(Note::Cs, 4);
-    /// let chord = Chord::from_vec(vec![b_bemol_2, c_sharp_4]);
+    /// let chord = Chord::from_vec(vec![b_flat_2, c_sharp_4]);
     /// assert_eq!(chord.len(), 2);
     /// ```
     pub fn len(&self) -> usize {
@@ -43,8 +43,8 @@ impl Chord {
     /// Creates a chord from a `Vec` of sounds.
     /// ```
     /// use music::{Chord, Sound, Note};
-    /// let e_bemol_5 = Sound::init(Note::Eb, 5);
-    /// let chord = Chord::from_vec(vec![e_bemol_5]);
+    /// let e_flat_5 = Sound::init(Note::Eb, 5);
+    /// let chord = Chord::from_vec(vec![e_flat_5]);
     /// assert_eq!(chord.len(), 1);
     /// ```
     pub fn from_vec(sounds: Vec<Sound>) -> Self {

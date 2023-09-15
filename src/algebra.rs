@@ -1,4 +1,4 @@
-use crate::{Bemol, Chord, Interval, Natural, Note, Sharp, Sound};
+use crate::{Flat, Chord, Interval, Natural, Note, Sharp, Sound};
 
 use std::any::type_name;
 
@@ -39,9 +39,9 @@ macro_rules! operation {
                     "music::accidental::Sharp" => {
                         self.range() + accidental.number()
                     },
-                    "music::accidental::Bemol" => {
+                    "music::accidental::Flat" => {
                         if self.range() < accidental.number() {
-                            panic!("Too much bemol to add.")
+                            panic!("Too much Flat to add.")
                         } else {
                             self.range() - accidental.number()
                         }
@@ -138,4 +138,4 @@ macro_rules! operation {
 
     )*);
 }
-operation! {Sharp Bemol Natural}
+operation! {Sharp Flat Natural}

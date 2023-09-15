@@ -4,51 +4,51 @@ use std::fmt;
 
 use crate::note::Note;
 
-/// Implements the bemol symbol ('♭').
+/// Implements the flat symbol ('♭').
 #[derive(Debug, Clone, Copy)]
-pub struct Bemol {
-    number: u8, // number of bemols to represent
+pub struct Flat {
+    number: u8, // number of flats to represent
 }
-impl Bemol {
-    /// Creates bemol symbols concatenated a given number of times.
+impl Flat {
+    /// Creates flat symbols concatenated a given number of times.
     /// # Panics
     /// It panics when the number of symbols is set to 0.
     /// ```
-    /// use music::Bemol;
-    /// let bemol = Bemol::init(3);
-    /// for char in bemol.display().chars(){
+    /// use music::Flat;
+    /// let flat = Flat::init(3);
+    /// for char in flat.display().chars(){
     ///     assert_eq!(char, '♭');
     /// }
-    /// println!("{bemol}");
+    /// println!("{flat}");
     /// ```
     pub fn init(number: u8) -> Self {
         assert!(number > 0);
         Self { number }
     }
-    /// Gives the number of bemols.
+    /// Gives the number of flats.
     /// ```
-    /// use music::Bemol;
-    /// let bemol = Bemol::init(3);
-    /// assert_eq!(bemol.number(), 3);
+    /// use music::Flat;
+    /// let flat = Flat::init(3);
+    /// assert_eq!(flat.number(), 3);
     /// ```
     pub fn number(&self) -> usize {
         self.number as usize
     }
-    /// Converts bemols to string.
+    /// Converts flats to string.
     /// ```
-    /// use music::Bemol;
-    /// let bemol = Bemol::init(10);
-    /// assert!(!bemol.display().chars().any(|char| char!='♭'));
+    /// use music::Flat;
+    /// let flat = Flat::init(10);
+    /// assert!(!flat.display().chars().any(|char| char!='♭'));
     /// ```
     pub fn display(&self) -> String {
         "♭".repeat(self.number())
     }
-    /// Adds a Note to the accidental.
+    /// Adds a `Note` to the accidental.
     /// ```
-    /// use music::Bemol;
+    /// use music::Flat;
     /// use music::Note;
-    /// let bemol = Bemol::init(3);
-    /// assert_eq!(Note::Eb + bemol, Note::C);
+    /// let flat = Flat::init(3);
+    /// assert_eq!(Note::Eb + flat, Note::C);
     /// ```
     pub fn add_note(&self, note: &Note) -> Note {
         let int_acc = self.number() % 12;
@@ -190,4 +190,4 @@ macro_rules! display_acc {
         }
     )*);
 }
-display_acc! {Sharp Bemol Natural}
+display_acc! {Sharp Flat Natural}

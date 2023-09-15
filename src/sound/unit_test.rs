@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use super::super::Sound;
-    use crate::accidental::{Bemol, Natural, Sharp};
+    use crate::accidental::{Flat, Natural, Sharp};
     use crate::note::Note;
 
     #[test]
@@ -32,7 +32,7 @@ mod tests {
 
         let sound = Sound::init(Note::Cs, 2);
         let expected_sound = Sound::init(Note::G, 1);
-        let accidental = Bemol::init(6);
+        let accidental = Flat::init(6);
         assert_eq!(sound + accidental, expected_sound);
         assert_eq!(&sound + &accidental, expected_sound);
         assert_eq!(accidental + sound, expected_sound);

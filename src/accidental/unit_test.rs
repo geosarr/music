@@ -1,11 +1,11 @@
 #[cfg(test)]
 mod tests {
-    use super::super::{Bemol, Natural, Sharp};
+    use super::super::{Flat, Natural, Sharp};
     #[test]
-    fn test_bemol() {
+    fn test_flat() {
         let n = 5;
-        let bemol = Bemol::init(n);
-        assert_eq!(bemol.display().chars().count(), n as usize);
+        let flat = Flat::init(n);
+        assert_eq!(flat.display().chars().count(), n as usize);
     }
     #[test]
     fn test_sharp() {
