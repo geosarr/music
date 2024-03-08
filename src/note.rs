@@ -102,35 +102,94 @@ impl Note {
             _ => panic!("Not implemented."),
         }
     }
-    /// Tests whether or not the note is in C major.
-    /// ```
-    /// use music::Note;
-    /// assert!(Note::C.is_in_c_major());
-    /// assert!(!Note::Ds.is_in_c_major());
-    /// assert!(Note::Fb.is_in_c_major());
-    /// ```
-    pub fn is_in_c_major(&self) -> bool {
+    /// Gives the major scale whose tonic is the current note.
+    fn major_scale_from_tonic(&self) -> Vec<usize> {
         vec![0, 2, 4, 5, 7, 9, 11]
             .iter()
-            .any(|num| num == &self.to_usize())
+            .map(|note| (note + self.to_usize()) % 12)
+            .collect()
     }
-    /// Computes the distance (in half tone) to upper C note.
+    /// Gives the minor scale whose tonic is the current note.
+    fn minor_scale_from_tonic(&self) -> Vec<usize> {
+        vec![0, 2, 3, 5, 7, 8, 11]
+            .iter()
+            .map(|note| (note + self.to_usize()) % 12)
+            .collect()
+    }
+    fn test_is_in_scale(&self, scale: Vec<usize>) -> bool {
+        scale.iter().any(|num| num == &self.to_usize())
+    }
+    /// Tests whether or not the note is in a given major scale.
     /// ```
     /// use music::Note;
-    /// assert_eq!(Note::D.dist_to_upper_c(), 10);
-    /// assert_eq!(Note::Fs.dist_to_upper_c(), 6);
+    /// assert!(Note::D.is_in_major_scale(Note::D));
+    /// assert!(Note::E.is_in_major_scale(Note::D));
+    /// assert!(Note::Fs.is_in_major_scale(Note::D));
+    /// assert!(Note::G.is_in_major_scale(Note::D));
+    /// assert!(Note::A.is_in_major_scale(Note::D));
+    /// assert!(Note::B.is_in_major_scale(Note::D));
+    /// assert!(Note::Cs.is_in_major_scale(Note::D));
     /// ```
-    pub fn dist_to_upper_c(&self) -> usize {
-        12 - self.to_usize()
+    pub fn is_in_major_scale(&self, tonic: Note) -> bool {
+        match tonic {
+            Note::A => self.test_is_in_scale(Note::A.major_scale_from_tonic()),
+            Note::As => self.test_is_in_scale(Note::As.major_scale_from_tonic()),
+            Note::Bb => self.test_is_in_scale(Note::Bb.major_scale_from_tonic()),
+            Note::B => self.test_is_in_scale(Note::B.major_scale_from_tonic()),
+            Note::Bs => self.test_is_in_scale(Note::Bs.major_scale_from_tonic()),
+            Note::Cb => self.test_is_in_scale(Note::Cb.major_scale_from_tonic()),
+            Note::C => self.test_is_in_scale(Note::C.major_scale_from_tonic()),
+            Note::Cs => self.test_is_in_scale(Note::Cs.major_scale_from_tonic()),
+            Note::Db => self.test_is_in_scale(Note::Db.major_scale_from_tonic()),
+            Note::D => self.test_is_in_scale(Note::D.major_scale_from_tonic()),
+            Note::Ds => self.test_is_in_scale(Note::Ds.major_scale_from_tonic()),
+            Note::Eb => self.test_is_in_scale(Note::Eb.major_scale_from_tonic()),
+            Note::E => self.test_is_in_scale(Note::E.major_scale_from_tonic()),
+            Note::Es => self.test_is_in_scale(Note::Es.major_scale_from_tonic()),
+            Note::Fb => self.test_is_in_scale(Note::Fb.major_scale_from_tonic()),
+            Note::F => self.test_is_in_scale(Note::F.major_scale_from_tonic()),
+            Note::Fs => self.test_is_in_scale(Note::Fs.major_scale_from_tonic()),
+            Note::Gb => self.test_is_in_scale(Note::Gb.major_scale_from_tonic()),
+            Note::G => self.test_is_in_scale(Note::G.major_scale_from_tonic()),
+            Note::Gs => self.test_is_in_scale(Note::Gs.major_scale_from_tonic()),
+            Note::Ab => self.test_is_in_scale(Note::Ab.major_scale_from_tonic()),
+        }
     }
-    /// Computes the distance (in half tone) to lower C note.
+    /// Tests whether or not the note is in a given minor scale.
     /// ```
     /// use music::Note;
-    /// assert_eq!(Note::D.dist_to_lower_c(), 2);
-    /// assert_eq!(Note::Fs.dist_to_lower_c(), 6);
+    /// assert!(Note::A.is_in_minor_scale(Note::A));
+    /// assert!(Note::B.is_in_minor_scale(Note::A));
+    /// assert!(Note::C.is_in_minor_scale(Note::A));
+    /// assert!(Note::D.is_in_minor_scale(Note::A));
+    /// assert!(Note::E.is_in_minor_scale(Note::A));
+    /// assert!(Note::F.is_in_minor_scale(Note::A));
+    /// assert!(Note::Gs.is_in_minor_scale(Note::A));
     /// ```
-    pub fn dist_to_lower_c(&self) -> usize {
-        self.to_usize()
+    pub fn is_in_minor_scale(&self, tonic: Note) -> bool {
+        match tonic {
+            Note::A => self.test_is_in_scale(Note::A.minor_scale_from_tonic()),
+            Note::As => self.test_is_in_scale(Note::As.minor_scale_from_tonic()),
+            Note::Bb => self.test_is_in_scale(Note::Bb.minor_scale_from_tonic()),
+            Note::B => self.test_is_in_scale(Note::B.minor_scale_from_tonic()),
+            Note::Bs => self.test_is_in_scale(Note::Bs.minor_scale_from_tonic()),
+            Note::Cb => self.test_is_in_scale(Note::Cb.minor_scale_from_tonic()),
+            Note::C => self.test_is_in_scale(Note::C.minor_scale_from_tonic()),
+            Note::Cs => self.test_is_in_scale(Note::Cs.minor_scale_from_tonic()),
+            Note::Db => self.test_is_in_scale(Note::Db.minor_scale_from_tonic()),
+            Note::D => self.test_is_in_scale(Note::D.minor_scale_from_tonic()),
+            Note::Ds => self.test_is_in_scale(Note::Ds.minor_scale_from_tonic()),
+            Note::Eb => self.test_is_in_scale(Note::Eb.minor_scale_from_tonic()),
+            Note::E => self.test_is_in_scale(Note::E.minor_scale_from_tonic()),
+            Note::Es => self.test_is_in_scale(Note::Es.minor_scale_from_tonic()),
+            Note::Fb => self.test_is_in_scale(Note::Fb.minor_scale_from_tonic()),
+            Note::F => self.test_is_in_scale(Note::F.minor_scale_from_tonic()),
+            Note::Fs => self.test_is_in_scale(Note::Fs.minor_scale_from_tonic()),
+            Note::Gb => self.test_is_in_scale(Note::Gb.minor_scale_from_tonic()),
+            Note::G => self.test_is_in_scale(Note::G.minor_scale_from_tonic()),
+            Note::Gs => self.test_is_in_scale(Note::Gs.minor_scale_from_tonic()),
+            Note::Ab => self.test_is_in_scale(Note::Ab.minor_scale_from_tonic()),
+        }
     }
 }
 
