@@ -123,7 +123,7 @@ impl Note {
     pub fn dist_to_upper_c(&self) -> usize {
         12 - self.to_usize()
     }
-    /// Computes the distance  (in half tone) to lower C note.
+    /// Computes the distance (in half tone) to lower C note.
     /// ```
     /// use music::Note;
     /// assert_eq!(Note::D.dist_to_lower_c(), 2);

@@ -10,7 +10,7 @@ pub struct Sound {
     octave: usize,
 }
 impl Sound {
-    /// Creates representation of a piano key/sound.
+    /// Creates a representation of a piano key/sound.
     /// # Panics
     /// It panics when the octave is set to 0.
     /// ```

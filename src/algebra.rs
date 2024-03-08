@@ -1,4 +1,4 @@
-use crate::{Flat, Chord, Interval, Natural, Note, Sharp, Sound};
+use crate::{Chord, Flat, Interval, Natural, Note, Sharp, Sound};
 
 use std::any::type_name;
 
