@@ -45,7 +45,7 @@ impl Sound {
     pub fn octave(&self) -> usize {
         self.octave
     }
-    /// Gives the range of the key/sound, from 0 to +∞,
+    /// Gives the range of the key/sound, from 0 to +∞ (usize::MAX instead),
     /// 0 representing the lowest C note.
     /// ```
     /// use music::Sound;
@@ -57,6 +57,19 @@ impl Sound {
     /// ```
     pub fn range(&self) -> usize {
         (self.octave - 1) * 12 + self.note.to_usize()
+    }
+    /// Returns the corresponding sound of a range.
+    /// ```
+    /// use music::Sound;
+    /// use music::Note;
+    /// let range = 28;
+    /// let expected_sound = Sound::init(Note::E, 3);
+    /// assert_eq!(Sound::from_range(range), expected_sound);
+    /// ```
+    pub fn from_range(range: usize) -> Self {
+        let octave = (range / 12) + 1;
+        let note = Note::from_usize(range % 12);
+        return Self { note, octave };
     }
 }
 impl PartialEq for Sound {
