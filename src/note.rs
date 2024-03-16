@@ -103,14 +103,14 @@ impl Note {
         }
     }
     /// Gives the major scale whose tonic is the current note.
-    fn major_scale_from_tonic(&self) -> Vec<usize> {
+    pub fn major_scale_from_tonic(&self) -> Vec<usize> {
         vec![0, 2, 4, 5, 7, 9, 11]
             .iter()
             .map(|note| (note + self.to_usize()) % 12)
             .collect()
     }
     /// Gives the minor scale whose tonic is the current note.
-    fn minor_scale_from_tonic(&self) -> Vec<usize> {
+    pub fn minor_scale_from_tonic(&self) -> Vec<usize> {
         vec![0, 2, 3, 5, 7, 8, 11]
             .iter()
             .map(|note| (note + self.to_usize()) % 12)
