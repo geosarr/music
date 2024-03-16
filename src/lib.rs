@@ -12,5 +12,5 @@ pub use chord::Chord;
 pub use harmony::KraehenbuehlKnuth;
 pub use interval::Interval;
 pub use note::Note;
-pub use scale::Scale;
+pub use scale::{Scale, ScaleType};
 pub use sound::Sound;
