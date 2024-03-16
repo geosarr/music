@@ -2,22 +2,23 @@
 
 use crate::{Chord, Flat, Note, Scale, Sharp, Sound};
 
+use rand::prelude::*;
 use rand_chacha::rand_core::SeedableRng;
 use rand_chacha::ChaCha20Rng;
 pub struct KraehenbuehlKnuth {
     melody: Vec<Sound>,
-    scale: Option<Note>,
+    scale: Note,
     next_position: u8,
     seed: u64,
 }
 
 impl KraehenbuehlKnuth {
     pub fn init(melody: Vec<Sound>, scale: Option<Note>) -> Self {
-        if let Some(_) = scale {
+        if let Some(_scale) = scale {
             Self {
                 melody,
                 next_position: 0,
-                scale,
+                scale: _scale,
                 seed: 0,
             }
         } else {
@@ -31,11 +32,11 @@ impl KraehenbuehlKnuth {
         }
     }
 
-    fn find_scale(melody: Vec<Sound>) -> Option<Note> {
-        None
+    fn find_scale(melody: Vec<Sound>) -> Note {
+        Note::C
     }
 
-    fn sound_below(&self, sound: Sound, num: u8) -> Sound {
+    pub fn sound_below(&self, sound: Sound, num: u8) -> Sound {
         sound + Flat::init(num)
     }
 
@@ -47,7 +48,7 @@ impl KraehenbuehlKnuth {
             sound,
         ];
         if self.next_position == 1 {
-            return vec![
+            chord = vec![
                 self.sound_below(sound, 7),
                 self.sound_below(sound, 5),
                 self.sound_below(sound, 3),
@@ -62,7 +63,8 @@ impl KraehenbuehlKnuth {
             ];
         }
         let mut rng = ChaCha20Rng::seed_from_u64(self.seed);
-        self.next_position = (self.next_position + 1) % 3;
+        let random_number = rng.gen_range(0..=1); // equal to 0 or 1.
+        self.next_position = (self.next_position + 1 + 2 * random_number) % 3;
         chord
     }
 
