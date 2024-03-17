@@ -1,6 +1,6 @@
 // Algorithm taken from https://www.gathering4gardner.org/g4g14gift/G4G14-NeilBickford-AlgorithmsForMusicalHarmonization.pdf
 
-use crate::{Chord, Flat, Note, Scale, Sharp, Sound};
+use crate::{Chord, Scale, Sound};
 
 use rand::prelude::*;
 use rand_chacha::rand_core::SeedableRng;
@@ -47,7 +47,16 @@ impl KraehenbuehlKnuth {
         return self.scale_range[sound_position - number];
     }
 
-    fn get_chord(&mut self, sound: Sound) -> Vec<Sound> {
+    fn adjust_bass(&mut self, chord: &mut Vec<Sound>) {
+        let bass_note = chord[0].note();
+        let scale_notes = self.scale.notes();
+        let leading_tone = scale_notes[scale_notes.len() - 1];
+        if bass_note == leading_tone {
+            chord[0] = self.sound_below(chord[0], 2);
+        }
+    }
+
+    fn get_chord(&mut self, sound: Sound) -> Chord {
         let mut chord = vec![
             self.sound_below(sound, 11),
             self.sound_below(sound, 4),
@@ -69,10 +78,12 @@ impl KraehenbuehlKnuth {
                 sound,
             ];
         }
+        self.adjust_bass(&mut chord);
         let mut rng = ChaCha20Rng::seed_from_u64(self.seed);
         let random_number = rng.gen_range(0..=1); // equal to 0 or 1.
+        println!("{} {}", self.next_position, random_number);
         self.next_position = (self.next_position + 1 + 2 * random_number) % 3;
-        chord
+        Chord::from_vec(chord)
     }
 
     fn initialise_range(&mut self) {
@@ -96,9 +107,7 @@ impl KraehenbuehlKnuth {
         let mut harmonics = Vec::with_capacity(self.melody.len());
         for sound in self.melody.clone() {
             self.add_octaves(sound.octave());
-            // println!("{:?}", self.scale_range);
-            let chord = Chord::from_vec(self.get_chord(sound));
-            harmonics.push(chord);
+            harmonics.push(self.get_chord(sound));
         }
         harmonics
     }

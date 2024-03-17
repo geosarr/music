@@ -28,11 +28,19 @@ impl Scale {
         Self { note, scale_type }
     }
 
-    pub fn notes(&self) -> Vec<usize> {
+    pub fn usize_notes(&self) -> Vec<usize> {
         match self.scale_type {
             ScaleType::Major => self.note.major_scale_from_tonic(),
             ScaleType::Minor => self.note.minor_scale_from_tonic(),
         }
+    }
+
+    pub fn notes(&self) -> Vec<Note> {
+        return self
+            .usize_notes()
+            .into_iter()
+            .map(Note::from_usize)
+            .collect();
     }
 
     fn get_sound(tonic: Sound, current_note: Note) -> Sound {
@@ -49,7 +57,7 @@ impl Scale {
         let mut sounds = Vec::with_capacity(notes.len());
         sounds.push(tonic);
         for i in 1..notes.len() {
-            let note = Note::from_usize(notes[i]);
+            let note = notes[i];
             let sound = Self::get_sound(tonic, note);
             sounds.push(sound);
         }

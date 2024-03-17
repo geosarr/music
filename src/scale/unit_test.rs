@@ -5,7 +5,7 @@ mod tests {
     #[test]
     fn test_notes() {
         let scale = Scale::init(Note::C, ScaleType::Major);
-        assert_eq!(vec![0, 2, 4, 5, 7, 9, 11], scale.notes());
+        assert_eq!(vec![0, 2, 4, 5, 7, 9, 11], scale.usize_notes());
     }
     #[test]
     fn test_sounds() {
