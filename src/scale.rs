@@ -54,13 +54,9 @@ impl Scale {
     pub fn sounds(&self, octave: usize) -> Vec<Sound> {
         let notes = self.notes();
         let tonic = Sound::init(self.note, octave);
-        let mut sounds = Vec::with_capacity(notes.len());
-        sounds.push(tonic);
-        for i in 1..notes.len() {
-            let note = notes[i];
-            let sound = Self::get_sound(tonic, note);
-            sounds.push(sound);
-        }
-        sounds
+        notes
+            .iter()
+            .map(|note| Self::get_sound(tonic, *note))
+            .collect()
     }
 }

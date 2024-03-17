@@ -56,7 +56,9 @@ impl KraehenbuehlKnuth {
         }
     }
 
-    fn get_chord(&mut self, sound: Sound) -> Chord {
+    fn get_chord(&mut self, sound: Sound, random_number: u8) -> Chord {
+        // println!("{:?}", sound);
+        // println!("{:?}", self.next_position);
         let mut chord = vec![
             self.sound_below(sound, 11),
             self.sound_below(sound, 4),
@@ -79,9 +81,9 @@ impl KraehenbuehlKnuth {
             ];
         }
         self.adjust_bass(&mut chord);
-        let mut rng = ChaCha20Rng::seed_from_u64(self.seed);
-        let random_number = rng.gen_range(0..=1); // equal to 0 or 1.
-        println!("{} {}", self.next_position, random_number);
+
+        // println!("{} {}", self.next_position, random_number);
+        // println!("{} {} {:?}", random_number, self.next_position, chord);
         self.next_position = (self.next_position + 1 + 2 * random_number) % 3;
         Chord::from_vec(chord)
     }
@@ -91,6 +93,7 @@ impl KraehenbuehlKnuth {
         self.scale_range.extend_from_slice(&self.scale.sounds(2));
         self.scale_range.extend_from_slice(&self.scale.sounds(3));
         self.scale_range.extend_from_slice(&self.scale.sounds(4));
+        self.scale_range.extend_from_slice(&self.scale.sounds(5));
     }
 
     fn add_octaves(&mut self, octave: usize) {
@@ -104,10 +107,13 @@ impl KraehenbuehlKnuth {
 
     pub fn harmonize(&mut self) -> Vec<Chord> {
         self.initialise_range();
+        let mut rng = ChaCha20Rng::seed_from_u64(self.seed);
+        // println!("{:?}", self.scale_range);
         let mut harmonics = Vec::with_capacity(self.melody.len());
         for sound in self.melody.clone() {
             self.add_octaves(sound.octave());
-            harmonics.push(self.get_chord(sound));
+            let random_number = rng.gen_range(0..=1); // equal to 0 or 1.
+            harmonics.push(self.get_chord(sound, random_number));
         }
         harmonics
     }
