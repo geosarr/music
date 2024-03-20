@@ -57,8 +57,6 @@ impl KraehenbuehlKnuth {
     }
 
     fn get_chord(&mut self, sound: Sound, random_number: u8) -> Chord {
-        // println!("{:?}", sound);
-        // println!("{:?}", self.next_position);
         let mut chord = vec![
             self.sound_below(sound, 11),
             self.sound_below(sound, 4),
@@ -81,9 +79,6 @@ impl KraehenbuehlKnuth {
             ];
         }
         self.adjust_bass(&mut chord);
-
-        // println!("{} {}", self.next_position, random_number);
-        // println!("{} {} {:?}", random_number, self.next_position, chord);
         self.next_position = (self.next_position + 1 + 2 * random_number) % 3;
         Chord::from_vec(chord)
     }
