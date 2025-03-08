@@ -69,7 +69,7 @@ impl Sound {
     pub fn from_range(range: usize) -> Self {
         let octave = (range / 12) + 1;
         let note = Note::from_usize(range % 12);
-        return Self { note, octave };
+        Self { note, octave }
     }
 }
 impl PartialEq for Sound {
@@ -79,7 +79,7 @@ impl PartialEq for Sound {
 }
 impl PartialOrd for Sound {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        self.range().partial_cmp(&other.range())
+        Some(self.cmp(other))
     }
 }
 impl Ord for Sound {

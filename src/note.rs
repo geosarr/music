@@ -1,6 +1,7 @@
 #[cfg(test)]
 mod unit_test;
 use std::fmt;
+use std::hash::{Hash, Hasher};
 
 /// Implementation of a note
 #[derive(Debug, Clone, Copy, Eq)]
@@ -32,10 +33,15 @@ impl PartialEq for Note {
         self.to_usize() == other.to_usize()
     }
 }
+impl Hash for Note {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.to_usize().hash(state);
+    }
+}
 
 impl PartialOrd for Note {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        self.to_usize().partial_cmp(&other.to_usize())
+        Some(self.cmp(other))
     }
 }
 
@@ -104,14 +110,14 @@ impl Note {
     }
     /// Gives the major scale whose tonic is the current note.
     pub fn major_scale_from_tonic(&self) -> Vec<usize> {
-        vec![0, 2, 4, 5, 7, 9, 11]
+        [0, 2, 4, 5, 7, 9, 11]
             .iter()
             .map(|note| (note + self.to_usize()) % 12)
             .collect()
     }
     /// Gives the minor scale whose tonic is the current note.
     pub fn minor_scale_from_tonic(&self) -> Vec<usize> {
-        vec![0, 2, 3, 5, 7, 8, 11]
+        [0, 2, 3, 5, 7, 8, 11]
             .iter()
             .map(|note| (note + self.to_usize()) % 12)
             .collect()

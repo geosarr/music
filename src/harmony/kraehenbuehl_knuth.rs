@@ -1,6 +1,8 @@
 // Algorithm taken from https://www.gathering4gardner.org/g4g14gift/G4G14-NeilBickford-AlgorithmsForMusicalHarmonization.pdf
 
-use crate::{Chord, Scale, Sound};
+use std::collections::HashSet;
+
+use crate::{Chord, Note, Scale, Sound};
 
 use rand::prelude::*;
 use rand_chacha::rand_core::SeedableRng;
@@ -36,6 +38,29 @@ impl KraehenbuehlKnuth {
     }
 
     fn find_scale(melody: Vec<Sound>) -> Scale {
+        let notes = melody
+            .iter()
+            .map(|sound| sound.note())
+            .collect::<HashSet<Note>>();
+        let mut minor_scores: Vec<(usize, usize)> = Vec::with_capacity(12);
+        let mut major_scores: Vec<(usize, usize)> = Vec::with_capacity(12);
+        for num_note in 0..12 {
+            let note = Note::from_usize(num_note);
+            let major_score = notes
+                .iter()
+                .map(|n| usize::from(n.is_in_major_scale(note)))
+                .sum();
+            major_scores.push((major_score, num_note));
+            let minor_score = notes
+                .iter()
+                .map(|n| usize::from(n.is_in_minor_scale(note)))
+                .sum();
+            minor_scores.push((minor_score, num_note));
+        }
+        minor_scores.sort();
+        println!("{:?}", minor_scores);
+        major_scores.sort();
+        println!("{:?}", major_scores);
         Scale::default()
     }
 
@@ -44,10 +69,10 @@ impl KraehenbuehlKnuth {
             .scale_range
             .binary_search(&sound)
             .expect("Failed to find sound");
-        return self.scale_range[sound_position - number];
+        self.scale_range[sound_position - number]
     }
 
-    fn adjust_bass(&mut self, chord: &mut Vec<Sound>) {
+    fn adjust_bass(&mut self, chord: &mut [Sound]) {
         let bass_note = chord[0].note();
         let scale_notes = self.scale.notes();
         let leading_tone = scale_notes[scale_notes.len() - 1];

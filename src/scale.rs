@@ -36,11 +36,10 @@ impl Scale {
     }
 
     pub fn notes(&self) -> Vec<Note> {
-        return self
-            .usize_notes()
+        self.usize_notes()
             .into_iter()
             .map(Note::from_usize)
-            .collect();
+            .collect()
     }
 
     fn get_sound(tonic: Sound, current_note: Note) -> Sound {

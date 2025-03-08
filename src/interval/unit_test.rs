@@ -18,7 +18,7 @@ mod tests {
         let expected_interval = Interval::init(expected_sound_one, expected_sound_two);
         assert_eq!(interval + accidental, expected_interval);
         assert_eq!(&interval + &accidental, expected_interval);
-        assert_eq!(interval + accidental, expected_interval);
+        assert_eq!(accidental + interval, expected_interval);
         assert_eq!(&accidental + &interval, expected_interval);
 
         let accidental = Flat::init(3);
@@ -27,7 +27,7 @@ mod tests {
         let expected_interval = Interval::init(expected_sound_one, expected_sound_two);
         assert_eq!(interval + accidental, expected_interval);
         assert_eq!(&interval + &accidental, expected_interval);
-        assert_eq!(interval + accidental, expected_interval);
+        assert_eq!(accidental + interval, expected_interval);
         assert_eq!(&accidental + &interval, expected_interval);
 
         let accidental = Natural::init(3);

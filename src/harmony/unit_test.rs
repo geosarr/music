@@ -35,10 +35,17 @@ mod tests {
             Sound::init(Note::Bb, 4),
         ];
         let mut harmonizer = KraehenbuehlKnuth::init(melody, Some(scale));
+        // let mut harmonizer = KraehenbuehlKnuth::init(melody, None);
         let harmonics: Vec<crate::Chord> = harmonizer.harmonize();
         for chord in &harmonics {
             println!("{:?}", chord);
         }
+        // use std::collections::HashSet;
+        // let notes = melody
+        //     .iter()
+        //     .map(|sound| sound.note())
+        //     .collect::<HashSet<Note>>();
+        // println!("{:?}", notes);
         // println!("{:?}", Note::C.major_scale_from_tonic());
         // println!("{:?}", Note::D.major_scale_from_tonic());
         // assert_eq!(Sound::init(Note::Cs, 4), Sound::init(Note::Db, 4));

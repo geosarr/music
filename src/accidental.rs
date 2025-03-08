@@ -38,7 +38,7 @@ impl Flat {
     /// ```
     /// use music::Flat;
     /// let flat = Flat::init(10);
-    /// assert!(!flat.display().chars().any(|char| char!='♭'));
+    /// assert!(flat.display().chars().all(|char| char == '♭'));
     /// ```
     pub fn display(&self) -> String {
         "♭".repeat(self.number())
@@ -96,7 +96,7 @@ impl Sharp {
     /// ```
     /// use music::Sharp;
     /// let sharp = Sharp::init(10);
-    /// assert!(!sharp.display().chars().any(|char| char!='#'));
+    /// assert!(sharp.display().chars().all(|char| char == '#'));
     /// ```
     pub fn display(&self) -> String {
         "#".repeat(self.number())
@@ -148,7 +148,7 @@ impl Natural {
     /// ```
     /// use music::Natural;
     /// let natural = Natural::init(10);
-    /// assert!(!natural.display().chars().any(|char| char!='♮'));
+    /// assert!(natural.display().chars().all(|char| char == '♮'));
     /// ```
     pub fn display(&self) -> String {
         "♮".repeat(self.number())
